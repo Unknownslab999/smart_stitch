@@ -36,8 +36,13 @@ class SplashScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: constraints.maxHeight * 0.18),
-                    const SmartStitchLogo(size: 100),
+                    SizedBox(height: constraints.maxHeight * 0.14),
+                    SmartStitchLogo(
+                      variant: SmartStitchLogoVariant.withLabel,
+                      size: SmartStitchLogoSize.large,
+                      maxWidth:
+                          (constraints.maxWidth * 0.62).clamp(180.0, 260.0),
+                    ),
                     const Spacer(),
                     Text(
                       'Your digital tailoring marketplace\nconnecting customers, tailors & shops',

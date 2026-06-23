@@ -6,7 +6,10 @@ abstract final class RouteNames {
   static const String customerSearch = '/customer/search';
   static const String customerOrders = '/customer/orders';
   static const String customerProfile = '/customer/profile';
+  static const String customerSendRequest = '/customer/send-request';
+  static const String customerTailorProfile = '/customer/tailor';
+  static const String customerShopProfile = '/customer/shop';
   static const String aiAssistant = '/ai-assistant';
-  static const String tailorDashboard = '/tailor/dashboard';
-  static const String shopkeeperInventory = '/shopkeeper/inventory';
+  static const String tailorHome = '/tailor/home';
+  static const String shopkeeperHome = '/shopkeeper/home';
 }

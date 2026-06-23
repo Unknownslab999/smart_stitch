@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/auth/auth_session.dart';
+import '../../../../core/auth/demo_auth_service.dart';
 import '../../../../core/routing/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -32,9 +34,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onSignIn() {
-    if (_formKey.currentState?.validate() ?? false) {
-      context.go(RouteNames.customerHome);
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+
+    final user = DemoAuthService.authenticate(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Invalid email or password'),
+        ),
+      );
+      return;
     }
+
+    AuthSession.signIn(user);
+    context.go(DemoAuthService.homeRouteFor(user.role));
   }
 
   @override
@@ -45,21 +62,24 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             AuthCurvedHeader(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.xxl),
-                  child: Container(
-                    padding: const EdgeInsets.all(AppSpacing.lg),
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
-                      shape: BoxShape.circle,
+              height: MediaQuery.sizeOf(context).width < 360 ? 240 : 260,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final logoMaxWidth =
+                      (constraints.maxWidth * 0.32).clamp(100.0, 140.0);
+
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.paddingOf(context).top + AppSpacing.md,
+                      ),
+                      child: SmartStitchLogo(
+                        variant: SmartStitchLogoVariant.iconOnly,
+                        maxWidth: logoMaxWidth,
+                      ),
                     ),
-                    child: const SmartStitchLogo(
-                      size: 64,
-                      showText: false,
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
             ),
             Transform.translate(
@@ -92,9 +112,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password';
-                          }
-                          if (value.length < 6) {
-                            return 'Password must be at least 6 characters';
                           }
                           return null;
                         },

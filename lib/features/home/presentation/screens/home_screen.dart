@@ -1,32 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/auth/auth_session.dart';
 import '../../../../core/routing/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/mock_shop.dart';
 import '../../../../shared/models/mock_tailor.dart';
+import '../../../../shared/models/mock_user.dart';
+import '../../../../features/customer/presentation/utils/customer_routes.dart';
+import '../../../../features/customer/presentation/utils/customer_navigation.dart';
+import '../../../../shared/widgets/app_drawer.dart';
 import '../../../../shared/widgets/customer_bottom_nav_bar.dart';
 import '../../../../shared/widgets/hero_banner.dart';
 import '../../../../shared/widgets/provider_card.dart';
 import '../../../../shared/widgets/section_header.dart';
+import '../../../../shared/widgets/smart_stitch_logo.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = AuthSession.currentUser ?? MockUser.customer;
+
     return Scaffold(
       backgroundColor: AppColors.background,
+      drawer: SmartStitchDrawer(user: user),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu_rounded),
-          onPressed: () {},
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu_rounded),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
-        title: Text(
-          'SmartStitch',
-          style: AppTypography.logoSmall,
+        title: SmartStitchLogo(
+          variant: SmartStitchLogoVariant.iconOnly,
+          height: 36,
+          maxWidth: 36,
         ),
         centerTitle: true,
         backgroundColor: AppColors.background,
@@ -62,6 +73,9 @@ class HomeScreen extends StatelessWidget {
                     specialty: tailor.specialty,
                     experienceYears: tailor.experienceYears,
                     imageUrl: tailor.imageUrl,
+                    onTap: () => context.push(
+                      CustomerRoutes.tailorProfile(tailor.id),
+                    ),
                   );
                 },
               ),
@@ -89,6 +103,9 @@ class HomeScreen extends StatelessWidget {
                     specialty: shop.specialty,
                     experienceYears: shop.experienceYears,
                     imageUrl: shop.imageUrl,
+                    onTap: () => context.push(
+                      CustomerRoutes.shopProfile(shop.id),
+                    ),
                   );
                 },
               ),
@@ -97,30 +114,14 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push(RouteNames.aiAssistant),
-        backgroundColor: AppColors.primary,
-        elevation: 4,
-        child: const Icon(
-          Icons.auto_awesome_rounded,
-          color: AppColors.textOnPrimary,
-        ),
+      floatingActionButton: HomeFabBar(
+        onPlusPressed: () => context.push(RouteNames.customerSendRequest),
+        onAiPressed: () => context.push(RouteNames.aiAssistant),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CustomerBottomNavBar(
         currentIndex: 0,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              break;
-            case 1:
-              context.go(RouteNames.customerSearch);
-            case 2:
-              context.go(RouteNames.customerOrders);
-            case 3:
-              context.go(RouteNames.customerProfile);
-          }
-        },
+        onTap: (index) => handleCustomerNavTap(context, index),
       ),
     );
   }
