@@ -1,3 +1,4 @@
+import '../../core/constants/app_assets.dart';
 import '../../core/enums/provider_type.dart';
 import 'mock_shop.dart';
 import 'mock_tailor.dart';
@@ -34,20 +35,13 @@ class ProviderProfile {
 
   String get roleLabel => type.label;
 
-  static const _portfolioImages = [
-    'https://images.unsplash.com/photo-1595777457583-95e059ce29db?w=400',
-    'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=400',
-    'https://images.unsplash.com/photo-1612336307429-8a898d35e9c0?w=400',
-    'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400',
-    'https://images.unsplash.com/photo-1572804013309-59a23b2c913e?w=400',
-    'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400',
-  ];
+  static final _portfolioImages = AppAssets.dresses;
 
-  static const _fabricImages = [
-    'https://images.unsplash.com/photo-1617104424971-3f2e1f69c3a2?w=400',
-    'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=400',
-    'https://images.unsplash.com/photo-1583391733981-5c55a4f4f2c0?w=400',
-    'https://images.unsplash.com/photo-1612336307429-8a898d35e9c0?w=400',
+  static final _fabricImages = [
+    AppAssets.dress5,
+    AppAssets.dress6,
+    AppAssets.dress7,
+    AppAssets.dress8,
   ];
 
   static List<PortfolioItem> _buildPortfolio(
@@ -74,9 +68,9 @@ class ProviderProfile {
         date: '2 weeks ago',
       ),
       ProviderReview(
-        customerName: 'Bilal H.',
+        customerName: 'Hira M.',
         rating: 4.5,
-        comment: 'Great quality and delivered on time. Highly recommended.',
+        comment: 'Beautiful stitching and delivered on time. Highly recommended.',
         date: '1 month ago',
       ),
       ProviderReview(
@@ -128,10 +122,10 @@ class ProviderProfile {
         _portfolioImages,
         const [
           'Bridal Lehenga',
-          'Formal Sherwani',
-          'Silk Kurta',
-          'Embroidered Gown',
-          'Casual Shalwar',
+          'Lawn 3-Piece',
+          'Silk Kurti',
+          'Embroidered Frock',
+          'Casual Shalwar Kameez',
           'Party Wear',
         ],
       ),

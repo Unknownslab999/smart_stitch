@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/mock_chat.dart';
+import '../../../../shared/widgets/app_image.dart';
 
 class ChatDateDivider extends StatelessWidget {
   const ChatDateDivider({super.key, this.label = 'TODAY'});
@@ -126,9 +127,7 @@ class _BubbleContent extends StatelessWidget {
                 message.text ?? '',
                 style: AppTypography.bodyMedium.copyWith(
                   height: 1.45,
-                  color: message.isOutgoing
-                      ? AppColors.textPrimary
-                      : AppColors.textPrimary,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ),
@@ -137,25 +136,16 @@ class _BubbleContent extends StatelessWidget {
               children: [
                 AspectRatio(
                   aspectRatio: 4 / 3,
-                  child: Image.network(
-                    message.imageUrl!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      color: AppColors.primaryLight,
-                      child: const Icon(Icons.image_outlined),
-                    ),
-                  ),
+                  child: _ChatImage(message: message),
                 ),
-                if (message.caption != null)
+                if (message.caption != null && message.caption!.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.all(AppSpacing.md),
                     child: Text(
                       message.caption!,
                       style: AppTypography.bodySmall.copyWith(
                         height: 1.4,
-                        color: message.isOutgoing
-                            ? AppColors.textPrimary
-                            : AppColors.textPrimary,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ),
@@ -213,6 +203,32 @@ class _BubbleContent extends StatelessWidget {
             ),
         },
       ),
+    );
+  }
+}
+
+class _ChatImage extends StatelessWidget {
+  const _ChatImage({required this.message});
+
+  final ChatMessage message;
+
+  @override
+  Widget build(BuildContext context) {
+    if (message.localImageBytes != null) {
+      return Image.memory(
+        message.localImageBytes!,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => Container(
+          color: AppColors.primaryLight,
+          child: const Icon(Icons.image_outlined),
+        ),
+      );
+    }
+
+    return AppImage(
+      source: message.imageUrl ?? '',
+      fit: BoxFit.cover,
+      errorIcon: Icons.image_outlined,
     );
   }
 }

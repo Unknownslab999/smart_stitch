@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/mock_shopkeeper_dashboard.dart';
+import '../../../../shared/widgets/app_image.dart';
 
 const _actionDark = Color(0xFF3D3028);
 
@@ -438,13 +439,10 @@ class _InventoryMaterialCard extends StatelessWidget {
               children: [
                 AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: Image.network(
-                    item.imageUrl,
+                  child: AppImage(
+                    source: item.imageUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      color: AppColors.primaryLight,
-                      child: const Icon(Icons.texture_rounded, size: 48),
-                    ),
+                    errorIcon: Icons.texture_rounded,
                   ),
                 ),
                 Positioned(
@@ -712,13 +710,9 @@ class _PortfolioCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.network(
-                item.imageUrl,
+              AppImage(
+                source: item.imageUrl,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  color: AppColors.primaryLight,
-                  child: const Icon(Icons.image_outlined, size: 48),
-                ),
               ),
               DecoratedBox(
                 decoration: BoxDecoration(

@@ -14,6 +14,8 @@ import '../../../../shared/models/mock_shop.dart';
 import '../../../../shared/models/mock_tailor.dart';
 import '../../../../shared/models/mock_user.dart';
 import '../../../../shared/models/provider_profile.dart';
+import '../../../../shared/models/selected_image.dart';
+import '../../../../shared/services/photo_picker_service.dart';
 import '../../../../shared/services/request_recipient_service.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../../shared/widgets/app_header_bar.dart';
@@ -38,7 +40,7 @@ class SendRequestScreen extends StatefulWidget {
 class _SendRequestScreenState extends State<SendRequestScreen> {
   late RequestType _requestType;
   String? _selectedProviderId;
-  String? _fileName;
+  SelectedImage? _designImage;
   final _descriptionController = TextEditingController();
 
   bool get _isPersonal => widget.args?.isPersonal ?? false;
@@ -123,10 +125,10 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
     });
   }
 
-  void _mockUpload() {
-    setState(() {
-      _fileName = 'design_sketch.png';
-    });
+  Future<void> _pickDesignImage() async {
+    final image = await PhotoPickerService.showPickerSheet(context);
+    if (image == null || !mounted) return;
+    setState(() => _designImage = image);
   }
 
   Future<void> _sendRequest() async {
@@ -182,8 +184,9 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
               const SizedBox(height: AppSpacing.lg),
             ],
             FileUploadSection(
-              fileName: _fileName,
-              onUpload: _mockUpload,
+              selectedImage: _designImage,
+              onPick: _pickDesignImage,
+              onClear: () => setState(() => _designImage = null),
             ),
             if (_requestType == RequestType.tailoring) ...[
               const SizedBox(height: AppSpacing.lg),

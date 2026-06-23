@@ -7,9 +7,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../shared/models/mock_tailor_dashboard.dart';
 import '../../../../shared/models/mock_user.dart';
+import '../../../../shared/services/photo_picker_service.dart';
 import '../../../../shared/widgets/app_header_bar.dart';
 import '../../../../shared/widgets/app_drawer.dart';
 import '../../../../shared/widgets/customer_bottom_nav_bar.dart';
+import '../../../../shared/widgets/price_quote_sheet.dart';
 import '../utils/tailor_navigation.dart';
 import '../widgets/tailor_dashboard_sections.dart';
 
@@ -38,9 +40,34 @@ class _TailorHomeScreenState extends State<TailorHomeScreen> {
     );
   }
 
-  void _quoteRequest(TailorIncomingRequest request) {
+  Future<void> _quoteRequest(TailorIncomingRequest request) async {
+    final amount = await PriceQuoteSheet.show(
+      context,
+      title: 'Send Quote',
+      subtitle: 'Quote for ${request.customerName} — ${request.garmentDetail}',
+      confirmLabel: 'Send Quote',
+      initialValue: 5000,
+    );
+    if (amount == null || !mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Opening quote form for ${request.customerName}')),
+      SnackBar(
+        content: Text(
+          'Quote of ${PriceQuoteSheet.formatAmount(amount)} sent to '
+          '${request.customerName}',
+        ),
+      ),
+    );
+  }
+
+  Future<void> _attachToOrder(TailorActiveOrder order) async {
+    final image = await PhotoPickerService.showPickerSheet(context);
+    if (image == null || !mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Photo attached to ${order.orderNumber} (${image.displayName})',
+        ),
+      ),
     );
   }
 
@@ -83,6 +110,7 @@ class _TailorHomeScreenState extends State<TailorHomeScreen> {
                   SnackBar(content: Text('Updating ${order.orderNumber}')),
                 );
               },
+              onAttachment: _attachToOrder,
             ),
             const SizedBox(height: AppSpacing.xl),
             const AtelierHealthSection(

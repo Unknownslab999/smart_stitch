@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../core/constants/app_assets.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_typography.dart';
+import 'app_image.dart';
 
 class HeroBanner extends StatelessWidget {
   const HeroBanner({
@@ -24,12 +26,9 @@ class HeroBanner extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.network(
-                'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800',
+              AppImage(
+                source: AppAssets.dress1,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  color: AppColors.primaryLight,
-                ),
               ),
               Container(
                 decoration: BoxDecoration(

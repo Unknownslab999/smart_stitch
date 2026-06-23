@@ -7,9 +7,12 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../shared/models/mock_shopkeeper_dashboard.dart';
 import '../../../../shared/models/mock_user.dart';
+import '../../../../shared/models/selected_image.dart';
+import '../../../../shared/services/photo_picker_service.dart';
 import '../../../../shared/widgets/app_header_bar.dart';
 import '../../../../shared/widgets/app_drawer.dart';
 import '../../../../shared/widgets/customer_bottom_nav_bar.dart';
+import '../../../../shared/widgets/price_quote_sheet.dart';
 import '../utils/shopkeeper_navigation.dart';
 import '../widgets/shopkeeper_dashboard_sections.dart';
 
@@ -23,6 +26,7 @@ class ShopkeeperHomeScreen extends StatefulWidget {
 class _ShopkeeperHomeScreenState extends State<ShopkeeperHomeScreen> {
   String? _selectedCategory = ShopkeeperInventoryItem.filterCategories.first;
   String _searchQuery = '';
+  SelectedImage? _uploadedMaterial;
 
   List<ShopkeeperInventoryItem> get _filteredInventory {
     return ShopkeeperInventoryItem.sampleData.where((item) {
@@ -39,6 +43,30 @@ class _ShopkeeperHomeScreenState extends State<ShopkeeperHomeScreen> {
   void _showSnack(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
+    );
+  }
+
+  Future<void> _uploadMaterial() async {
+    final image = await PhotoPickerService.showPickerSheet(context);
+    if (image == null || !mounted) return;
+    setState(() => _uploadedMaterial = image);
+    _showSnack('Material photo "${image.displayName}" ready to list');
+  }
+
+  Future<void> _sendOffer(ShopkeeperMaterialRequest request) async {
+    final amount = await PriceQuoteSheet.show(
+      context,
+      title: 'Send Offer',
+      subtitle:
+          'Offer for ${request.materialName} (${request.quantity}) requested by '
+          '${request.requestedBy}',
+      confirmLabel: 'Send Offer',
+      initialValue: 8000,
+    );
+    if (amount == null || !mounted) return;
+    _showSnack(
+      'Offer of ${PriceQuoteSheet.formatAmount(amount)} sent for '
+      '${request.materialName}',
     );
   }
 
@@ -60,14 +88,25 @@ class _ShopkeeperHomeScreenState extends State<ShopkeeperHomeScreen> {
           children: [
             MarketplaceHeaderSection(
               onExportInventory: () => _showSnack('Exporting inventory...'),
-              onUploadMaterial: () => _showSnack('Opening upload form...'),
+              onUploadMaterial: _uploadMaterial,
             ),
+            if (_uploadedMaterial != null) ...[
+              const SizedBox(height: AppSpacing.md),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                child: Image.memory(
+                  _uploadedMaterial!.bytes,
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
             const SizedBox(height: AppSpacing.xl),
             ActiveMaterialRequestsSection(
               requests: ShopkeeperMaterialRequest.sampleData,
               onViewAll: () => _showSnack('Viewing all material requests...'),
-              onSendOffer: (request) =>
-                  _showSnack('Sending offer for ${request.materialName}'),
+              onSendOffer: _sendOffer,
             ),
             const SizedBox(height: AppSpacing.xl),
             InventorySearchSection(

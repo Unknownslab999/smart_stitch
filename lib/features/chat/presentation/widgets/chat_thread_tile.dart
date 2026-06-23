@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/mock_chat.dart';
+import '../../../../shared/widgets/app_image.dart';
 
 class ChatThreadTile extends StatelessWidget {
   const ChatThreadTile({
@@ -28,13 +29,14 @@ class ChatThreadTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 28,
-                backgroundImage: NetworkImage(thread.participantAvatarUrl),
-                onBackgroundImageError: (_, _) {},
-                child: thread.participantAvatarUrl.isEmpty
-                    ? const Icon(Icons.person_rounded)
-                    : null,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(28),
+                child: AppImage(
+                  source: thread.participantAvatarUrl,
+                  width: 56,
+                  height: 56,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(

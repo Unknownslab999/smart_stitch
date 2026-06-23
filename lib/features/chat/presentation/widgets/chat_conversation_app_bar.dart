@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/mock_chat.dart';
+import '../../../../shared/widgets/app_image.dart';
 
 class ChatConversationAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -34,10 +35,14 @@ class ChatConversationAppBar extends StatelessWidget
       titleSpacing: 0,
       title: Row(
         children: [
-          CircleAvatar(
-            radius: 18,
-            backgroundImage: NetworkImage(thread.participantAvatarUrl),
-            onBackgroundImageError: (_, _) {},
+          ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: AppImage(
+              source: thread.participantAvatarUrl,
+              width: 36,
+              height: 36,
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
