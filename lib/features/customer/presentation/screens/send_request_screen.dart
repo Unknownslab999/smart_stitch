@@ -16,6 +16,7 @@ import '../../../../shared/models/mock_user.dart';
 import '../../../../shared/models/provider_profile.dart';
 import '../../../../shared/services/request_recipient_service.dart';
 import '../../../../shared/widgets/app_button.dart';
+import '../../../../shared/widgets/app_header_bar.dart';
 import '../../../../shared/widgets/app_drawer.dart';
 import '../../../../shared/widgets/customer_bottom_nav_bar.dart';
 import '../utils/customer_navigation.dart';
@@ -146,27 +147,15 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       drawer: SmartStitchDrawer(user: user),
-      appBar: AppBar(
+      appBar: AppHeaderBar(
+        showDrawerButton: !_isPersonal,
         leading: _isPersonal
             ? IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new_rounded),
                 onPressed: () => context.pop(),
               )
-            : Builder(
-                builder: (context) => IconButton(
-                  icon: const Icon(Icons.menu_rounded),
-                  onPressed: () => Scaffold.of(context).openDrawer(),
-                ),
-              ),
-        title: Text(
-          'SmartStitch',
-          style: AppTypography.titleLarge.copyWith(
-            fontWeight: FontWeight.w700,
-            color: AppColors.primaryDark,
-          ),
-        ),
-        centerTitle: false,
-        backgroundColor: AppColors.background,
+            : null,
+        onSearchTap: () => context.push(RouteNames.customerSearch),
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(1),
           child: Divider(height: 1, color: AppColors.divider),
@@ -259,7 +248,7 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
                   _selectedProviderId =
                       _selectedProviderId == id ? null : id;
                 }),
-                onSearch: () => context.go(RouteNames.customerSearch),
+                onSearch: () => context.push(RouteNames.customerSearch),
               ),
             ],
             const SizedBox(height: AppSpacing.xl),

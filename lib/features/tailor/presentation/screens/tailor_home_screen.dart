@@ -5,13 +5,44 @@ import '../../../../core/auth/auth_session.dart';
 import '../../../../core/routing/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/models/mock_tailor_dashboard.dart';
 import '../../../../shared/models/mock_user.dart';
+import '../../../../shared/widgets/app_header_bar.dart';
 import '../../../../shared/widgets/app_drawer.dart';
-import '../../../../shared/widgets/smart_stitch_logo.dart';
+import '../../../../shared/widgets/customer_bottom_nav_bar.dart';
+import '../utils/tailor_navigation.dart';
+import '../widgets/tailor_dashboard_sections.dart';
 
-class TailorHomeScreen extends StatelessWidget {
+class TailorHomeScreen extends StatefulWidget {
   const TailorHomeScreen({super.key});
+
+  @override
+  State<TailorHomeScreen> createState() => _TailorHomeScreenState();
+}
+
+class _TailorHomeScreenState extends State<TailorHomeScreen> {
+  late List<TailorIncomingRequest> _incomingRequests;
+
+  @override
+  void initState() {
+    super.initState();
+    _incomingRequests = List.of(TailorIncomingRequest.sampleData);
+  }
+
+  void _dismissRequest(TailorIncomingRequest request) {
+    setState(() {
+      _incomingRequests.removeWhere((item) => item.id == request.id);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Dismissed request from ${request.customerName}')),
+    );
+  }
+
+  void _quoteRequest(TailorIncomingRequest request) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Opening quote form for ${request.customerName}')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,61 +51,50 @@ class TailorHomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       drawer: SmartStitchDrawer(user: user),
-      appBar: AppBar(
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu_rounded),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: SmartStitchLogo(
-          variant: SmartStitchLogoVariant.iconOnly,
-          height: 36,
-          maxWidth: 36,
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.background,
+      appBar: AppHeaderBar(
+        showDrawerButton: true,
+        onSearchTap: () => context.push(RouteNames.tailorSearch),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.content_cut_rounded,
-                size: 64,
-                color: AppColors.primary,
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Text(
-                'Tailor Dashboard',
-                style: AppTypography.headlineMedium,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                'Welcome, ${user.fullName}',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                'Incoming requests, quotations, and orders will appear here.',
-                textAlign: TextAlign.center,
-                style: AppTypography.bodySmall,
-              ),
-            ],
-          ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DailySummarySection(
+              summary: TailorDailySummary.current,
+              onExportLog: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Exporting daily log...')),
+                );
+              },
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            IncomingRequestsSection(
+              requests: _incomingRequests,
+              queueCount: _incomingRequests.length,
+              onDismiss: _dismissRequest,
+              onQuote: _quoteRequest,
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            ActiveOrdersSection(
+              orders: TailorActiveOrder.sampleData,
+              onUpdateStatus: (order) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Updating ${order.orderNumber}')),
+                );
+              },
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            const AtelierHealthSection(
+              health: TailorAtelierHealth.current,
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push(RouteNames.aiAssistant),
-        backgroundColor: AppColors.primary,
-        child: const Icon(
-          Icons.auto_awesome_rounded,
-          color: AppColors.textOnPrimary,
-        ),
+      bottomNavigationBar: CustomerBottomNavBar(
+        currentIndex: 0,
+        onTap: (index) => handleTailorNavTap(context, index),
       ),
     );
   }
