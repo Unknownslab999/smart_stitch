@@ -10,6 +10,7 @@ import '../../../../shared/models/mock_tailor.dart';
 import '../../../../shared/models/mock_user.dart';
 import '../../../../features/customer/presentation/utils/customer_routes.dart';
 import '../../../../features/customer/presentation/utils/customer_navigation.dart';
+import '../../../../shared/widgets/app_header_bar.dart';
 import '../../../../shared/widgets/app_drawer.dart';
 import '../../../../shared/widgets/customer_bottom_nav_bar.dart';
 import '../../../../shared/widgets/hero_banner.dart';
@@ -27,20 +28,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       drawer: SmartStitchDrawer(user: user),
-      appBar: AppBar(
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu_rounded),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: SmartStitchLogo(
-          variant: SmartStitchLogoVariant.iconOnly,
-          height: 36,
-          maxWidth: 36,
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.background,
+      appBar: AppHeaderBar(
+        showDrawerButton: true,
+        onSearchTap: () => context.push(RouteNames.customerSearch),
       ),
       body: SingleChildScrollView(
         child: Column(

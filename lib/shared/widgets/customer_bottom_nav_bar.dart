@@ -4,7 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_typography.dart';
 
-enum CustomerNavItem { home, search, orders, profile }
+enum CustomerNavItem { home, chat, orders, profile }
 
 class CustomerBottomNavBar extends StatelessWidget {
   const CustomerBottomNavBar({
@@ -18,7 +18,7 @@ class CustomerBottomNavBar extends StatelessWidget {
 
   static const _items = [
     (icon: Icons.home_rounded, label: 'Home'),
-    (icon: Icons.search_rounded, label: 'Search'),
+    (icon: Icons.chat_bubble_outline_rounded, label: 'Chat'),
     (icon: Icons.receipt_long_rounded, label: 'Orders'),
     (icon: Icons.person_rounded, label: 'Profile'),
   ];

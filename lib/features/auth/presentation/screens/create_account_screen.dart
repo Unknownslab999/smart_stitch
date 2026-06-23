@@ -23,7 +23,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   UserRole _selectedRole = UserRole.tailor;
-  bool _agreedToTerms = false;
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
 
@@ -36,23 +35,29 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     super.dispose();
   }
 
+  String get _agreementLabel => switch (_selectedRole) {
+        UserRole.customer => 'Customer Agreement',
+        UserRole.tailor => 'Tailor Agreement',
+        UserRole.shopkeeper => 'Shopkeeper Agreement',
+      };
+
+  void _previewAgreement() {
+    context.push(
+      RouteNames.roleAgreement,
+      extra: {
+        'role': _selectedRole,
+        'previewOnly': true,
+      },
+    );
+  }
+
   void _onCreateAccount() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    if (!_agreedToTerms) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please agree to the terms and conditions'),
-        ),
-      );
-      return;
-    }
 
-    final destination = switch (_selectedRole) {
-      UserRole.customer => RouteNames.customerHome,
-      UserRole.tailor => RouteNames.tailorHome,
-      UserRole.shopkeeper => RouteNames.shopkeeperHome,
-    };
-    context.go(destination);
+    context.push(
+      RouteNames.roleAgreement,
+      extra: _selectedRole,
+    );
   }
 
   @override
@@ -161,34 +166,27 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: Checkbox(
-                      value: _agreedToTerms,
-                      onChanged: (value) {
-                        setState(() => _agreedToTerms = value ?? false);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() => _agreedToTerms = !_agreedToTerms);
-                      },
-                      child: Text(
-                        'I agree to the term and conditions privacy policy',
+              GestureDetector(
+                onTap: _previewAgreement,
+                child: Text.rich(
+                  TextSpan(
+                    style: AppTypography.bodySmall.copyWith(height: 1.4),
+                    children: [
+                      const TextSpan(
+                        text: 'By creating an account, you will review and accept the ',
+                      ),
+                      TextSpan(
+                        text: _agreementLabel,
                         style: AppTypography.bodySmall.copyWith(
-                          height: 1.4,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primaryDark,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
-                    ),
+                      const TextSpan(text: '.'),
+                    ],
                   ),
-                ],
+                ),
               ),
               const SizedBox(height: AppSpacing.xl),
               AppButton(

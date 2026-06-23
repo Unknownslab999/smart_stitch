@@ -12,6 +12,7 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/mock_user.dart';
 import '../../../../shared/models/provider_profile.dart';
 import '../../../../shared/widgets/app_drawer.dart';
+import '../../../../shared/widgets/app_header_bar.dart';
 import '../widgets/portfolio_reviews_section.dart';
 import '../widgets/provider_profile_header.dart';
 
@@ -47,20 +48,12 @@ class ProviderProfileScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.background,
         drawer: SmartStitchDrawer(user: user),
-        appBar: AppBar(
+        appBar: AppHeaderBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () => context.pop(),
           ),
-          title: Text(
-            'SmartStitch',
-            style: AppTypography.titleLarge.copyWith(
-              fontWeight: FontWeight.w700,
-              color: AppColors.primaryDark,
-            ),
-          ),
-          centerTitle: false,
-          backgroundColor: AppColors.background,
+          onSearchTap: () => context.push(RouteNames.customerSearch),
           bottom: const PreferredSize(
             preferredSize: Size.fromHeight(1),
             child: Divider(height: 1, color: AppColors.divider),

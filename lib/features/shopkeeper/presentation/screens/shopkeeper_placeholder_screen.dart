@@ -9,8 +9,8 @@ import '../../../../shared/widgets/app_drawer.dart';
 import '../../../../shared/widgets/app_header_bar.dart';
 import '../../../../shared/widgets/customer_bottom_nav_bar.dart';
 
-class CustomerPlaceholderScreen extends StatelessWidget {
-  const CustomerPlaceholderScreen({
+class ShopkeeperPlaceholderScreen extends StatelessWidget {
+  const ShopkeeperPlaceholderScreen({
     super.key,
     required this.title,
     required this.navIndex,
@@ -29,7 +29,7 @@ class CustomerPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = AuthSession.currentUser ?? MockUser.customer;
+    final user = AuthSession.currentUser ?? MockUser.shopkeeper;
 
     return Scaffold(
       backgroundColor: AppColors.background,
