@@ -66,5 +66,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Smart Stitch needs camera access so you can attach photos to chats, requests, and your profile.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Smart Stitch needs photo library access so you can attach images to chats, requests, and your profile.</string>
 </dict>
 </plist>

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_typography.dart';
+import 'app_image.dart';
 
 class ProviderCard extends StatelessWidget {
   const ProviderCard({
@@ -33,21 +34,12 @@ class ProviderCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
-              child: Image.network(
-                imageUrl,
+              child: AppImage(
+                source: imageUrl,
                 height: 140,
                 width: width,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  height: 140,
-                  width: width,
-                  color: AppColors.primaryLight,
-                  child: const Icon(
-                    Icons.person,
-                    size: 48,
-                    color: AppColors.primary,
-                  ),
-                ),
+                errorIcon: Icons.checkroom_outlined,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),

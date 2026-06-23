@@ -16,26 +16,26 @@ class MockSelectableProvider {
   static const List<MockSelectableProvider> tailors = [
     MockSelectableProvider(
       id: '1',
-      name: 'Rehan Khan',
-      rating: 4,
+      name: 'Ayesha Mehmood',
+      rating: 4.8,
       avatarColor: Color(0xFFC5A88E),
     ),
     MockSelectableProvider(
       id: '2',
-      name: 'Nadir',
-      rating: 4,
+      name: 'Fatima Khan',
+      rating: 4.9,
       avatarColor: Color(0xFFE8D5C4),
     ),
     MockSelectableProvider(
       id: '3',
-      name: 'Salim khan',
-      rating: 4,
+      name: 'Sana Malik',
+      rating: 4.7,
       avatarColor: Color(0xFFC5A88E),
     ),
     MockSelectableProvider(
       id: '4',
-      name: 'Ruhab',
-      rating: 4,
+      name: 'Zara Hussain',
+      rating: 4.6,
       avatarColor: Color(0xFFE8D5C4),
     ),
   ];

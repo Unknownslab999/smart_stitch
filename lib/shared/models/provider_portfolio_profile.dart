@@ -1,3 +1,5 @@
+import '../../core/constants/app_assets.dart';
+
 enum PremiumLeadStatus { newLead, active }
 
 class FeaturedWork {
@@ -109,16 +111,15 @@ abstract final class ProviderPortfolioProfile {
   static const shopkeeperFeatured = [
     FeaturedWork(
       id: 's1',
-      title: 'SILK LAPEL TUXEDO',
+      title: 'PREMIUM RAW SILK',
       saves: '1.2k Saves',
-      imageUrl:
-          'https://images.unsplash.com/photo-1583391733981-5c55a4f4f2c0?w=600',
+      imageUrl: AppAssets.dress5,
     ),
     FeaturedWork(
       id: 's2',
-      title: 'ITALIAN MERINO OVERCOAT',
+      title: 'CHANTILLY LACE COLLECTION',
       saves: '842 Saves',
-      isPlaceholder: true,
+      imageUrl: AppAssets.dress6,
     ),
   ];
 
@@ -127,15 +128,13 @@ abstract final class ProviderPortfolioProfile {
       id: 't1',
       title: 'CUSTOM BRIDAL LEHENGA',
       saves: '2.1k Saves',
-      imageUrl:
-          'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600',
+      imageUrl: AppAssets.dress1,
     ),
     FeaturedWork(
       id: 't2',
-      title: 'BESPOKE CHARCOAL BLAZER',
+      title: 'EMBROIDERED LAWN SUIT',
       saves: '1.6k Saves',
-      imageUrl:
-          'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600',
+      imageUrl: AppAssets.dress2,
     ),
   ];
 
@@ -165,10 +164,9 @@ abstract final class ProviderPortfolioProfile {
   static const shopkeeperLeads = [
     PremiumLead(
       id: 'sl1',
-      clientName: 'Arjun Sharma',
-      projectTitle: 'HERITAGE SILK SHERWANI',
-      imageUrl:
-          'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600',
+      clientName: 'Hira Shah',
+      projectTitle: 'BRIDAL SILK FABRIC ORDER',
+      imageUrl: AppAssets.dress3,
       badge: 'HIGH POTENTIAL',
       status: PremiumLeadStatus.newLead,
       actionLabel: 'SEND PROPOSAL',
@@ -177,26 +175,24 @@ abstract final class ProviderPortfolioProfile {
     ),
     PremiumLead(
       id: 'sl2',
-      clientName: 'Sarah Khan',
-      projectTitle: 'DOUBLE-BREASTED BLAZER',
-      imageUrl:
-          'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600',
-      badge: 'GLOBAL CLIENT',
+      clientName: 'Sana Saif',
+      projectTitle: 'PREMIUM LAWN COLLECTION',
+      imageUrl: AppAssets.dress4,
+      badge: 'REPEAT CLIENT',
       status: PremiumLeadStatus.active,
       actionLabel: 'VIEW FULL REQUIREMENTS',
       description:
-          'Seeking a sharp, structured fit for an upcoming gala. '
-          'High-quality wool preferred.',
+          'Seeking soft premium lawn for a summer wedding wardrobe. '
+          'Pastel tones preferred.',
     ),
   ];
 
   static const tailorLeads = [
     PremiumLead(
       id: 'tl1',
-      clientName: 'Komal Ayub',
+      clientName: 'Komal Shah',
       projectTitle: '3 PIECE LAWN SHALWAR KAMEEZ',
-      imageUrl:
-          'https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=600',
+      imageUrl: AppAssets.dress7,
       badge: 'DIRECT COMMISSION',
       status: PremiumLeadStatus.newLead,
       actionLabel: 'SEND QUOTE',
@@ -205,10 +201,9 @@ abstract final class ProviderPortfolioProfile {
     ),
     PremiumLead(
       id: 'tl2',
-      clientName: 'Meera Patel',
+      clientName: 'Mehwish Ali',
       projectTitle: 'COUTURE EVENING GOWN',
-      imageUrl:
-          'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600',
+      imageUrl: AppAssets.dress8,
       badge: 'BRIDAL CLIENT',
       status: PremiumLeadStatus.active,
       actionLabel: 'VIEW MEASUREMENTS',
@@ -227,7 +222,7 @@ abstract final class ProviderPortfolioProfile {
     ),
     TrendMetric(
       label: 'Trending Silhouette',
-      value: 'Oversized Deconstructed',
+      value: 'Flowing Anarkali Cuts',
       growthPercent: 115,
       progress: 0.55,
     ),
@@ -236,57 +231,53 @@ abstract final class ProviderPortfolioProfile {
   static const tailorTrends = [
     TrendMetric(
       label: 'Trending Technique',
-      value: 'Half-Canvas Construction',
+      value: 'Hand-Embroidered Necklines',
       growthPercent: 185,
       progress: 0.88,
     ),
     TrendMetric(
       label: 'Trending Style',
-      value: 'Soft Neapolitan Shoulder',
+      value: 'Pastel Bridal Lehengas',
       growthPercent: 132,
       progress: 0.62,
     ),
   ];
 
   static const shopkeeperTrendSuggestion =
-      'Strategic Suggestion: linen blends are seeing higher conversion '
-      'rates among premium clientele this season.';
+      'Strategic Suggestion: premium lawn and silk blends are seeing higher '
+      'conversion rates among bridal clientele this season.';
 
   static const tailorTrendSuggestion =
-      'Strategic Suggestion: unstructured tailoring and soft shoulders '
-      'are driving higher booking rates for formalwear this season.';
+      'Strategic Suggestion: embroidered lawn suits and soft bridal lehengas '
+      'are driving higher booking rates this season.';
 
   static const shopkeeperRecommendations = [
     ProfileRecommendation(
       id: 'sr1',
       name: 'Egyptian Cotton Giza',
-      subtitle: 'BEST FOR FORMAL SHIRTS',
-      imageUrl:
-          'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=200',
+      subtitle: 'BEST FOR SUMMER LAWN',
+      imageUrl: AppAssets.dress5,
     ),
     ProfileRecommendation(
       id: 'sr2',
       name: 'Raw Tussar Silk',
-      subtitle: 'BEST FOR ETHNIC OUTERWEAR',
-      imageUrl:
-          'https://images.unsplash.com/photo-1617104424971-3f2e1f69c3a2?w=200',
+      subtitle: 'BEST FOR BRIDAL WEAR',
+      imageUrl: AppAssets.dress6,
     ),
   ];
 
   static const tailorRecommendations = [
     ProfileRecommendation(
       id: 'tr1',
-      name: 'Hand-Stitched Lapels',
+      name: 'Hand-Embroidered Necklines',
       subtitle: 'SIGNATURE FINISHING TECHNIQUE',
-      imageUrl:
-          'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=200',
+      imageUrl: AppAssets.dress1,
     ),
     ProfileRecommendation(
       id: 'tr2',
-      name: '3D Body Mapping',
-      subtitle: 'PRECISION FIT WORKFLOW',
-      imageUrl:
-          'https://images.unsplash.com/photo-1617137968427-85924c800a41?w=200',
+      name: 'Precision Measurement Mapping',
+      subtitle: 'PERFECT FIT WORKFLOW',
+      imageUrl: AppAssets.dress2,
     ),
   ];
 }

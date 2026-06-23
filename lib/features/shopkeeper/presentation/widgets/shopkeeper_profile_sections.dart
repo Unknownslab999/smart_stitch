@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/provider_portfolio_profile.dart';
+import '../../../../shared/widgets/app_image.dart';
 
 const _eliteBrown = Color(0xFF4A3C31);
 const _actionBrown = Color(0xFF5C4A3D);
@@ -116,12 +117,9 @@ class _FeaturedWorkCard extends StatelessWidget {
               if (item.isPlaceholder)
                 Container(color: const Color(0xFF2B2B2B))
               else
-                Image.network(
-                  item.imageUrl!,
+                AppImage(
+                  source: item.imageUrl!,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    color: AppColors.primaryLight,
-                  ),
                 ),
               DecoratedBox(
                 decoration: BoxDecoration(
@@ -494,12 +492,9 @@ class _PremiumLeadCard extends StatelessWidget {
             children: [
               AspectRatio(
                 aspectRatio: 16 / 10,
-                child: Image.network(
-                  lead.imageUrl,
+                child: AppImage(
+                  source: lead.imageUrl,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    color: AppColors.primaryLight,
-                  ),
                 ),
               ),
               Positioned(
@@ -822,16 +817,11 @@ class _RecommendationTile extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
-            child: Image.network(
-              rec.imageUrl,
+            child: AppImage(
+              source: rec.imageUrl,
               width: 56,
               height: 56,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                width: 56,
-                height: 56,
-                color: AppColors.primaryLight,
-              ),
             ),
           ),
           const SizedBox(width: AppSpacing.md),

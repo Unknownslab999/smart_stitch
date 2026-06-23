@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/portfolio_item.dart';
+import '../../../../shared/widgets/app_image.dart';
 import '../../../../shared/widgets/star_rating.dart';
 
 class PortfolioGrid extends StatelessWidget {
@@ -40,13 +41,9 @@ class PortfolioGrid extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.network(
-                    item.imageUrl,
+                  AppImage(
+                    source: item.imageUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      color: AppColors.primaryLight,
-                      child: const Icon(Icons.image_outlined),
-                    ),
                   ),
                   Positioned(
                     left: 0,

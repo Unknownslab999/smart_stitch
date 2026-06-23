@@ -30,34 +30,34 @@ class DirectCommissionRequest {
   static const tailorRequests = [
     DirectCommissionRequest(
       id: 'tc1',
-      customerName: 'Komal Ayub',
+      customerName: 'Komal Shah',
       description: '3 Piece lawn shalwar kameez',
       budget: 3566,
     ),
     DirectCommissionRequest(
       id: 'tc2',
-      customerName: 'Ruhan Khan',
-      description: '3 Piece lawn shalwar kameez',
-      budget: 3566,
+      customerName: 'Hira Shah',
+      description: 'Embroidered party frock',
+      budget: 4566,
     ),
     DirectCommissionRequest(
       id: 'tc3',
       customerName: 'Sana Saif',
-      description: '3 Piece lawn shalwar kameez',
-      budget: 3566,
+      description: 'Bridal lehenga stitching',
+      budget: 12500,
     ),
   ];
 
   static const shopkeeperRequests = [
     DirectCommissionRequest(
       id: 'sc1',
-      customerName: 'Komal Ayub',
+      customerName: 'Komal Shah',
       description: 'Raw Silk (Cream) — 15.5 meters',
       budget: 12700,
     ),
     DirectCommissionRequest(
       id: 'sc2',
-      customerName: 'Ruhan Khan',
+      customerName: 'Hira Shah',
       description: 'Chantilly lace veil — 4 meters',
       budget: 3280,
     ),

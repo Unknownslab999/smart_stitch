@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/provider_profile.dart';
+import '../../../../shared/widgets/app_image.dart';
 import '../../../../shared/widgets/star_rating.dart';
 
 class ProviderProfileHeader extends StatelessWidget {
@@ -35,15 +36,14 @@ class ProviderProfileHeader extends StatelessWidget {
       ),
       child: Column(
         children: [
-          CircleAvatar(
-            radius: 44,
-            backgroundColor: AppColors.surface,
-            backgroundImage: NetworkImage(profile.imageUrl),
-            onBackgroundImageError: (exception, stackTrace) {},
-            child: Icon(
-              Icons.person_rounded,
-              size: 44,
-              color: AppColors.textHint,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(44),
+            child: AppImage(
+              source: profile.imageUrl,
+              width: 88,
+              height: 88,
+              fit: BoxFit.cover,
+              errorIcon: Icons.checkroom_outlined,
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -155,11 +155,15 @@ class SelectedProviderBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 28,
-            backgroundImage: NetworkImage(imageUrl),
-            onBackgroundImageError: (exception, stackTrace) {},
-            child: Icon(Icons.person, color: AppColors.textHint),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: AppImage(
+              source: imageUrl,
+              width: 56,
+              height: 56,
+              fit: BoxFit.cover,
+              errorIcon: Icons.checkroom_outlined,
+            ),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(

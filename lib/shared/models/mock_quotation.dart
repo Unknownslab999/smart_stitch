@@ -32,7 +32,7 @@ class MockQuotation {
   static const pending = [
     MockQuotation(
       id: 'q1',
-      providerName: 'Ali Faisal',
+      providerName: 'Ayesha Mehmood',
       price: 3566,
       location: 'Johar Town Near Emporium',
       estimatedDays: 5,
@@ -40,7 +40,7 @@ class MockQuotation {
     ),
     MockQuotation(
       id: 'q2',
-      providerName: 'Haider Ali',
+      providerName: 'Fatima Khan',
       price: 3966,
       location: 'Dream Gardens',
       estimatedDays: 7,
@@ -77,12 +77,12 @@ class MockOrderHistory {
   static const sampleData = [
     MockOrderHistory(
       id: 'h1',
-      providerName: 'Haider Ali',
+      providerName: 'Sana Malik',
       price: 3966,
     ),
     MockOrderHistory(
       id: 'h2',
-      providerName: 'Amir Mehmood',
+      providerName: 'Ayesha Mehmood',
       price: 5200,
     ),
     MockOrderHistory(

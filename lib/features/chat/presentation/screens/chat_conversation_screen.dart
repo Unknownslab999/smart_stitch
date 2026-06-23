@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../shared/models/mock_chat.dart';
+import '../../../../shared/models/selected_image.dart';
+import '../../../../shared/services/photo_picker_service.dart';
 import '../widgets/chat_conversation_app_bar.dart';
 import '../widgets/chat_input_bar.dart';
 import '../widgets/chat_message_bubble.dart';
@@ -22,6 +24,7 @@ class ChatConversationScreen extends StatefulWidget {
 class _ChatConversationScreenState extends State<ChatConversationScreen> {
   late List<ChatMessage> _messages;
   final _messageController = TextEditingController();
+  SelectedImage? _pendingImage;
 
   @override
   void initState() {
@@ -39,20 +42,41 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
 
   void _sendMessage() {
     final text = _messageController.text.trim();
-    if (text.isEmpty) return;
+    final hasImage = _pendingImage != null;
+    if (text.isEmpty && !hasImage) return;
 
     setState(() {
-      _messages.add(
-        ChatMessage(
-          id: 'local-${DateTime.now().millisecondsSinceEpoch}',
-          isOutgoing: true,
-          type: ChatMessageType.text,
-          time: _formatNow(),
-          text: text,
-        ),
-      );
+      if (hasImage) {
+        _messages.add(
+          ChatMessage(
+            id: 'local-img-${DateTime.now().millisecondsSinceEpoch}',
+            isOutgoing: true,
+            type: ChatMessageType.image,
+            time: _formatNow(),
+            localImageBytes: _pendingImage!.bytes,
+            caption: text.isEmpty ? null : text,
+          ),
+        );
+        _pendingImage = null;
+      } else {
+        _messages.add(
+          ChatMessage(
+            id: 'local-${DateTime.now().millisecondsSinceEpoch}',
+            isOutgoing: true,
+            type: ChatMessageType.text,
+            time: _formatNow(),
+            text: text,
+          ),
+        );
+      }
       _messageController.clear();
     });
+  }
+
+  Future<void> _attachPhoto() async {
+    final image = await PhotoPickerService.showPickerSheet(context);
+    if (image == null || !mounted) return;
+    setState(() => _pendingImage = image);
   }
 
   String _formatNow() {
@@ -111,11 +135,9 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
           ChatInputBar(
             controller: _messageController,
             onSend: _sendMessage,
-            onAttach: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Attachments coming soon')),
-              );
-            },
+            onAttach: _attachPhoto,
+            pendingImage: _pendingImage,
+            onClearPending: () => setState(() => _pendingImage = null),
           ),
         ],
       ),

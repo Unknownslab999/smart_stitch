@@ -1,3 +1,5 @@
+import '../../core/constants/app_assets.dart';
+
 class TailorDailySummary {
   const TailorDailySummary({
     required this.orders,
@@ -34,27 +36,24 @@ class TailorIncomingRequest {
   static const sampleData = [
     TailorIncomingRequest(
       id: '1',
-      customerName: 'ARJUN SHARMA',
-      garmentDetail: 'Custom Sherwani • Silk Chiffon • 2h ago',
+      customerName: 'AYESHA RAHIM',
+      garmentDetail: 'Bridal Lehenga • Premium Silk • 2h ago',
       timeAgo: '2h ago',
-      imageUrl:
-          'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=200',
+      imageUrl: AppAssets.dress1,
     ),
     TailorIncomingRequest(
       id: '2',
-      customerName: 'MEERA PATEL',
-      garmentDetail: 'Formal Blazer • Wool Blend • 4h ago',
+      customerName: 'MEHWISH ALI',
+      garmentDetail: 'Lawn 3-Piece • Cotton Silk • 4h ago',
       timeAgo: '4h ago',
-      imageUrl:
-          'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=200',
+      imageUrl: AppAssets.dress2,
     ),
     TailorIncomingRequest(
       id: '3',
-      customerName: 'KABIR SINGH',
-      garmentDetail: 'Kurta Set • Cotton Silk • 6h ago',
+      customerName: 'HIRA SHAH',
+      garmentDetail: 'Party Frock • Chiffon • 6h ago',
       timeAgo: '6h ago',
-      imageUrl:
-          'https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=200',
+      imageUrl: AppAssets.dress3,
     ),
   ];
 }
@@ -77,8 +76,8 @@ class TailorActiveOrder {
     required this.status,
     required this.progressLabel,
     required this.progressPercent,
+    required this.actionLabel,
     this.isPriority = false,
-    this.actionLabel = 'UPDATE STATUS',
   });
 
   final String id;
@@ -88,30 +87,30 @@ class TailorActiveOrder {
   final TailorOrderStatus status;
   final String progressLabel;
   final int progressPercent;
-  final bool isPriority;
   final String actionLabel;
+  final bool isPriority;
 
   static const sampleData = [
     TailorActiveOrder(
       id: '1',
-      orderNumber: 'ST-8821',
-      clientName: 'Priya V.',
-      expectedDate: 'Oct 24',
+      orderNumber: 'SS-2847',
+      clientName: 'Komal Shah',
+      expectedDate: 'Jun 22',
       status: TailorOrderStatus.inProgress,
-      progressLabel: 'MANUFACTURING PROGRESS',
+      progressLabel: 'EMBROIDERY PHASE',
       progressPercent: 65,
-      isPriority: true,
       actionLabel: 'UPDATE STATUS',
+      isPriority: true,
     ),
     TailorActiveOrder(
       id: '2',
-      orderNumber: 'ST-8794',
-      clientName: 'Rohan D.',
-      expectedDate: 'Oct 20',
+      orderNumber: 'SS-2831',
+      clientName: 'Sana Saif',
+      expectedDate: 'Jun 25',
       status: TailorOrderStatus.finishing,
-      progressLabel: 'QUALITY CONTROL',
-      progressPercent: 90,
-      actionLabel: 'MARK READY',
+      progressLabel: 'FINAL FITTING',
+      progressPercent: 88,
+      actionLabel: 'UPDATE STATUS',
     ),
   ];
 }
@@ -124,12 +123,12 @@ class TailorAtelierHealth {
   });
 
   final double qualityRating;
-  final double responseTimeHours;
+  final int responseTimeHours;
   final int clientReturnPercent;
 
   static const current = TailorAtelierHealth(
-    qualityRating: 4.5,
-    responseTimeHours: 1.4,
-    clientReturnPercent: 22,
+    qualityRating: 4.8,
+    responseTimeHours: 2,
+    clientReturnPercent: 68,
   );
 }

@@ -10,6 +10,7 @@ import '../../features/chat/presentation/screens/chat_conversation_screen.dart';
 import '../../features/chat/presentation/screens/chat_list_screen.dart';
 import '../../features/customer/presentation/screens/customer_orders_screen.dart';
 import '../../features/customer/presentation/screens/customer_placeholder_screen.dart';
+import '../../features/customer/presentation/screens/customer_profile_screen.dart';
 import '../../features/customer/presentation/screens/provider_profile_screen.dart';
 import '../../features/customer/presentation/screens/send_request_screen.dart';
 import '../../core/routing/send_request_args.dart';
@@ -18,10 +19,12 @@ import '../../features/customer/presentation/utils/customer_navigation.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/shopkeeper/presentation/screens/shopkeeper_home_screen.dart';
 import '../../features/shopkeeper/presentation/screens/shopkeeper_placeholder_screen.dart';
+import '../../features/shopkeeper/presentation/screens/shopkeeper_portfolio_screen.dart';
 import '../../features/shopkeeper/presentation/screens/shopkeeper_profile_screen.dart';
 import '../../features/shopkeeper/presentation/utils/shopkeeper_navigation.dart';
 import '../../features/tailor/presentation/screens/tailor_home_screen.dart';
 import '../../features/tailor/presentation/screens/tailor_placeholder_screen.dart';
+import '../../features/tailor/presentation/screens/tailor_portfolio_screen.dart';
 import '../../features/tailor/presentation/screens/tailor_profile_screen.dart';
 import '../../features/provider_orders/presentation/screens/provider_orders_screen.dart';
 import '../../core/enums/user_role.dart';
@@ -100,11 +103,13 @@ class AppRouter {
       ),
       GoRoute(
         path: RouteNames.customerProfile,
-        builder: (context, state) => CustomerPlaceholderScreen(
-          title: 'Profile',
-          navIndex: 3,
-          onNavTap: (index) => _onCustomerNavTap(context, index),
-          onSearchTap: () => context.push(RouteNames.customerSearch),
+        builder: (context, state) => const CustomerProfileScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.customerAgreement,
+        builder: (context, state) => const RoleAgreementScreen(
+          role: UserRole.customer,
+          previewOnly: true,
         ),
       ),
       GoRoute(
@@ -175,6 +180,17 @@ class AppRouter {
         builder: (context, state) => const TailorProfileScreen(),
       ),
       GoRoute(
+        path: RouteNames.tailorPortfolio,
+        builder: (context, state) => const TailorPortfolioScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.tailorAgreement,
+        builder: (context, state) => const RoleAgreementScreen(
+          role: UserRole.tailor,
+          previewOnly: true,
+        ),
+      ),
+      GoRoute(
         path: RouteNames.shopkeeperHome,
         builder: (context, state) => const ShopkeeperHomeScreen(),
       ),
@@ -216,6 +232,17 @@ class AppRouter {
       GoRoute(
         path: RouteNames.shopkeeperProfile,
         builder: (context, state) => const ShopkeeperProfileScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.shopkeeperPortfolio,
+        builder: (context, state) => const ShopkeeperPortfolioScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.shopkeeperAgreement,
+        builder: (context, state) => const RoleAgreementScreen(
+          role: UserRole.shopkeeper,
+          previewOnly: true,
+        ),
       ),
     ],
   );

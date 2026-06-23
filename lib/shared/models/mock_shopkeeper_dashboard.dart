@@ -1,3 +1,5 @@
+import '../../core/constants/app_assets.dart';
+
 enum InventoryStockStatus {
   inStock('IN STOCK'),
   lowStock('LOW STOCK');
@@ -69,8 +71,7 @@ class ShopkeeperInventoryItem {
       id: '1',
       name: 'Emerald Mulberry Silk',
       pricePerMeter: 'PKR 820/m',
-      imageUrl:
-          'https://images.unsplash.com/photo-1617104424971-3f2e1f69c3a2?w=600',
+      imageUrl: AppAssets.dress5,
       tags: ['PREMIUM', 'NATURAL DYE'],
       stockStatus: InventoryStockStatus.inStock,
       inventoryLabel: 'INVENTORY',
@@ -83,8 +84,7 @@ class ShopkeeperInventoryItem {
       id: '2',
       name: 'Chantilly Lace Veil',
       pricePerMeter: 'PKR 820/m',
-      imageUrl:
-          'https://images.unsplash.com/photo-1583391733981-5c55a4f4f2c0?w=600',
+      imageUrl: AppAssets.dress6,
       tags: ['HANDMADE', 'LACE'],
       stockStatus: InventoryStockStatus.lowStock,
       inventoryLabel: 'INVENTORY',
@@ -98,8 +98,7 @@ class ShopkeeperInventoryItem {
       id: '3',
       name: 'Pearl Button Set',
       pricePerMeter: 'PKR 120/set',
-      imageUrl:
-          'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600',
+      imageUrl: AppAssets.dress7,
       tags: ['ACCESSORY', 'BUTTON'],
       stockStatus: InventoryStockStatus.inStock,
       inventoryLabel: 'INVENTORY',
@@ -135,8 +134,7 @@ class ShopkeeperPortfolioItem {
       title: 'Industrial Wool Stack',
       subtitle:
           'Showcasing the structural integrity and heritage weave of our British Wool collection.',
-      imageUrl:
-          'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800',
+      imageUrl: AppAssets.dress8,
     ),
     ShopkeeperPortfolioItem(
       id: '2',
@@ -144,8 +142,7 @@ class ShopkeeperPortfolioItem {
       title: 'Heritage Lace Archive',
       subtitle:
           'Hand-finished Chantilly lace selected for recent bridal couture commissions.',
-      imageUrl:
-          'https://images.unsplash.com/photo-1583391733981-5c55a4f4f2c0?w=800',
+      imageUrl: AppAssets.dress4,
     ),
   ];
 }

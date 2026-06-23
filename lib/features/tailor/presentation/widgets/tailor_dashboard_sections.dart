@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/models/mock_tailor_dashboard.dart';
+import '../../../../shared/widgets/app_image.dart';
 import '../../../../shared/widgets/star_rating.dart';
 
 class DailySummarySection extends StatelessWidget {
@@ -198,17 +199,12 @@ class _IncomingRequestTile extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
-          child: Image.network(
-            request.imageUrl,
+          child: AppImage(
+            source: request.imageUrl,
             width: 52,
             height: 52,
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
-              width: 52,
-              height: 52,
-              color: AppColors.primaryLight,
-              child: const Icon(Icons.checkroom_outlined),
-            ),
+            errorIcon: Icons.checkroom_outlined,
           ),
         ),
         const SizedBox(width: AppSpacing.md),

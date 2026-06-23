@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import '../../core/constants/app_assets.dart';
 import '../../core/enums/user_role.dart';
 
 enum ChatParticipantType { tailor, shopkeeper, customer }
@@ -25,22 +28,20 @@ class ChatThread {
 
   static const customerThreads = [
     ChatThread(
-      id: 'c-shehzad',
-      participantName: 'Shehzad Mehmood',
-      participantAvatarUrl:
-          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
+      id: 'c-zara',
+      participantName: 'Zara Mehmood',
+      participantAvatarUrl: AppAssets.dress4,
       lastMessage:
-          'Hello! I\'ve just finished the initial 3D mapping of your measurements...',
+          'Hello! I\'ve just finished the initial measurement mapping for your lawn suit. Before I proceed with the neckline, could you confirm if you prefer a boat neck or a classic round neck?',
       lastMessageTime: '10:42 AM',
       participantType: ChatParticipantType.tailor,
       hasUnread: true,
-      orderLabel: 'Charcoal Blazer',
+      orderLabel: 'Embroidered Lawn Suit',
     ),
     ChatThread(
       id: 'c-amir',
       participantName: 'Amir Mehmood',
-      participantAvatarUrl:
-          'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=200',
+      participantAvatarUrl: AppAssets.dress5,
       lastMessage: 'Your silk shipment is ready for pickup.',
       lastMessageTime: 'Yesterday',
       participantType: ChatParticipantType.shopkeeper,
@@ -49,8 +50,7 @@ class ChatThread {
     ChatThread(
       id: 'c-fatima',
       participantName: 'Fatima Khan',
-      participantAvatarUrl:
-          'https://images.unsplash.com/photo-1583391733981-5c55a4f4f2c0?w=200',
+      participantAvatarUrl: AppAssets.dress2,
       lastMessage: 'The bridal fitting is scheduled for Friday.',
       lastMessageTime: 'Mon',
       participantType: ChatParticipantType.tailor,
@@ -61,34 +61,31 @@ class ChatThread {
   static const tailorThreads = [
     ChatThread(
       id: 't-komal',
-      participantName: 'Komal Ayub',
-      participantAvatarUrl:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
+      participantName: 'Komal Shah',
+      participantAvatarUrl: AppAssets.dress6,
       lastMessage:
-          'I definitely prefer the soft Neapolitan shoulder with minimal padding.',
+          'I definitely prefer the soft dupatta drape with minimal pleating on the sleeves.',
       lastMessageTime: '10:45 AM',
       participantType: ChatParticipantType.customer,
       hasUnread: true,
       orderLabel: '3 Piece Lawn',
     ),
     ChatThread(
-      id: 't-ruhan',
-      participantName: 'Ruhan Khan',
-      participantAvatarUrl:
-          'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200',
+      id: 't-hira',
+      participantName: 'Hira Shah',
+      participantAvatarUrl: AppAssets.dress7,
       lastMessage: 'Can we move the fitting to next week?',
       lastMessageTime: 'Yesterday',
       participantType: ChatParticipantType.customer,
-      orderLabel: 'Sherwani',
+      orderLabel: 'Party Frock',
     ),
   ];
 
   static const shopkeeperThreads = [
     ChatThread(
       id: 's-komal',
-      participantName: 'Komal Ayub',
-      participantAvatarUrl:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
+      participantName: 'Komal Shah',
+      participantAvatarUrl: AppAssets.dress6,
       lastMessage: 'Please confirm the cream silk is still available.',
       lastMessageTime: '11:02 AM',
       participantType: ChatParticipantType.customer,
@@ -98,8 +95,7 @@ class ChatThread {
     ChatThread(
       id: 's-sana',
       participantName: 'Sana Saif',
-      participantAvatarUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200',
+      participantAvatarUrl: AppAssets.dress8,
       lastMessage: 'The lace sample looks perfect, thank you!',
       lastMessageTime: 'Tue',
       participantType: ChatParticipantType.customer,
@@ -137,6 +133,7 @@ class ChatMessage {
     required this.time,
     this.text,
     this.imageUrl,
+    this.localImageBytes,
     this.caption,
     this.voiceDuration,
   });
@@ -147,17 +144,18 @@ class ChatMessage {
   final String time;
   final String? text;
   final String? imageUrl;
+  final Uint8List? localImageBytes;
   final String? caption;
   final String? voiceDuration;
 
-  static const shehzadConversation = [
+  static const zaraConversation = [
     ChatMessage(
       id: 'm1',
       isOutgoing: false,
       type: ChatMessageType.text,
       time: '10:38 AM',
       text:
-          'Hello! I\'ve just finished the initial 3D mapping of your measurements. Before I proceed with the \'Suppression\' phase of the pattern, could you confirm if you prefer a roped shoulder or a more natural Neapolitan drape for the charcoal blazer?',
+          'Hello! I\'ve just finished the initial measurement mapping for your lawn suit. Before I proceed with the neckline finishing, could you confirm if you prefer a boat neck or a classic round neck with light embroidery?',
     ),
     ChatMessage(
       id: 'm2',
@@ -165,27 +163,25 @@ class ChatMessage {
       type: ChatMessageType.text,
       time: '10:42 AM',
       text:
-          'I definitely prefer the soft Neapolitan shoulder with minimal padding. I want it to feel as comfortable as a cardigan. Did you receive the reference fabric I mailed?',
+          'I definitely prefer a soft boat neck with minimal sleeve pleating. I want it to feel light and comfortable for summer. Did you receive the fabric swatch I sent?',
     ),
     ChatMessage(
       id: 'm3',
       isOutgoing: false,
       type: ChatMessageType.image,
       time: '10:44 AM',
-      imageUrl:
-          'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600',
+      imageUrl: AppAssets.dress1,
       caption:
-          'This is the Loro Piana charcoal herringbone we discussed. The 280g weight will have a beautiful drape once canvassed.',
+          'This is the premium lawn we discussed. The soft drape will look beautiful once the dupatta edging is finished.',
     ),
     ChatMessage(
       id: 'm4',
       isOutgoing: true,
       type: ChatMessageType.image,
       time: '10:46 AM',
-      imageUrl:
-          'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600',
+      imageUrl: AppAssets.dress2,
       caption:
-          'This is the silhouette I\'m aiming for. The tapered waist is a must, but please ensure there is enough room in the chest for movement.',
+          'This is the silhouette I\'m aiming for. A fitted bodice is a must, but please ensure there is enough ease for comfortable movement.',
     ),
     ChatMessage(
       id: 'm5',
@@ -198,12 +194,12 @@ class ChatMessage {
 
   static List<ChatMessage> forThread(String threadId) {
     final useFullConversation =
-        threadId == 'c-shehzad' || threadId == 't-komal';
+        threadId == 'c-zara' || threadId == 't-komal';
     final flipPerspective = threadId.startsWith('t-') ||
         threadId.startsWith('s-');
 
     if (useFullConversation) {
-      return shehzadConversation
+      return zaraConversation
           .map(
             (message) => ChatMessage(
               id: message.id,
@@ -214,6 +210,7 @@ class ChatMessage {
               time: message.time,
               text: message.text,
               imageUrl: message.imageUrl,
+              localImageBytes: message.localImageBytes,
               caption: message.caption,
               voiceDuration: message.voiceDuration,
             ),

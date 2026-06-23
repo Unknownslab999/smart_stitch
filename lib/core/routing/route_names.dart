@@ -8,6 +8,7 @@ abstract final class RouteNames {
   static const String customerChat = '/customer/chat';
   static const String customerOrders = '/customer/orders';
   static const String customerProfile = '/customer/profile';
+  static const String customerAgreement = '/customer/agreement';
   static const String customerSendRequest = '/customer/send-request';
   static const String customerTailorProfile = '/customer/tailor';
   static const String customerShopProfile = '/customer/shop';
@@ -17,9 +18,13 @@ abstract final class RouteNames {
   static const String tailorChat = '/tailor/chat';
   static const String tailorOrders = '/tailor/orders';
   static const String tailorProfile = '/tailor/profile';
+  static const String tailorPortfolio = '/tailor/portfolio';
+  static const String tailorAgreement = '/tailor/agreement';
   static const String shopkeeperHome = '/shopkeeper/home';
   static const String shopkeeperSearch = '/shopkeeper/search';
   static const String shopkeeperChat = '/shopkeeper/chat';
   static const String shopkeeperOrders = '/shopkeeper/orders';
   static const String shopkeeperProfile = '/shopkeeper/profile';
+  static const String shopkeeperPortfolio = '/shopkeeper/portfolio';
+  static const String shopkeeperAgreement = '/shopkeeper/agreement';
 }

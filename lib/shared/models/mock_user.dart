@@ -22,7 +22,7 @@ class MockUser {
 
   static const tailor = MockUser(
     email: 'tailor@gmail.com',
-    fullName: 'Salim Ayub',
+    fullName: 'Nida Hussain',
     role: UserRole.tailor,
     rating: 4,
   );
