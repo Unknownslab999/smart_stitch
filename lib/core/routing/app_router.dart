@@ -6,9 +6,14 @@ import '../../features/auth/presentation/screens/create_account_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/customer/presentation/screens/customer_placeholder_screen.dart';
+import '../../features/customer/presentation/screens/provider_profile_screen.dart';
+import '../../features/customer/presentation/screens/send_request_screen.dart';
+import '../../core/routing/send_request_args.dart';
+import '../../core/enums/provider_type.dart';
+import '../../features/customer/presentation/utils/customer_navigation.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
-import '../../features/shopkeeper/presentation/screens/shopkeeper_inventory_screen.dart';
-import '../../features/tailor/presentation/screens/tailor_dashboard_screen.dart';
+import '../../features/shopkeeper/presentation/screens/shopkeeper_home_screen.dart';
+import '../../features/tailor/presentation/screens/tailor_home_screen.dart';
 import 'route_names.dart';
 
 class AppRouter {
@@ -56,30 +61,41 @@ class AppRouter {
         ),
       ),
       GoRoute(
+        path: RouteNames.customerSendRequest,
+        builder: (context, state) => SendRequestScreen(
+          args: state.extra as SendRequestArgs?,
+        ),
+      ),
+      GoRoute(
+        path: '${RouteNames.customerTailorProfile}/:id',
+        builder: (context, state) => ProviderProfileScreen(
+          type: ProviderType.tailor,
+          providerId: state.pathParameters['id']!,
+        ),
+      ),
+      GoRoute(
+        path: '${RouteNames.customerShopProfile}/:id',
+        builder: (context, state) => ProviderProfileScreen(
+          type: ProviderType.shopkeeper,
+          providerId: state.pathParameters['id']!,
+        ),
+      ),
+      GoRoute(
         path: RouteNames.aiAssistant,
         builder: (context, state) => const AiAssistantScreen(),
       ),
       GoRoute(
-        path: RouteNames.tailorDashboard,
-        builder: (context, state) => const TailorDashboardScreen(),
+        path: RouteNames.tailorHome,
+        builder: (context, state) => const TailorHomeScreen(),
       ),
       GoRoute(
-        path: RouteNames.shopkeeperInventory,
-        builder: (context, state) => const ShopkeeperInventoryScreen(),
+        path: RouteNames.shopkeeperHome,
+        builder: (context, state) => const ShopkeeperHomeScreen(),
       ),
     ],
   );
 
   static void _onCustomerNavTap(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        context.go(RouteNames.customerHome);
-      case 1:
-        context.go(RouteNames.customerSearch);
-      case 2:
-        context.go(RouteNames.customerOrders);
-      case 3:
-        context.go(RouteNames.customerProfile);
-    }
+    handleCustomerNavTap(context, index);
   }
 }

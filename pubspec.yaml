@@ -23,3 +23,5 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/Smart-Stitch_No Background_No Label.png
+    - assets/images/Smart-Stitch_No Background_Contains Label.png

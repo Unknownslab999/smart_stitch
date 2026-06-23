@@ -1,93 +1,140 @@
 import 'package:flutter/material.dart';
 
+import '../../core/constants/app_assets.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
-import '../../core/theme/app_typography.dart';
+
+enum SmartStitchLogoSize { compact, medium, large }
+
+enum SmartStitchLogoVariant { iconOnly, withLabel }
 
 class SmartStitchLogo extends StatelessWidget {
   const SmartStitchLogo({
     super.key,
-    this.size = 80,
-    this.showText = true,
-    this.textStyle,
+    this.variant = SmartStitchLogoVariant.withLabel,
+    this.size = SmartStitchLogoSize.medium,
+    this.maxWidth,
+    this.height,
   });
 
-  final double size;
-  final bool showText;
-  final TextStyle? textStyle;
+  final SmartStitchLogoVariant variant;
+  final SmartStitchLogoSize size;
+  final double? maxWidth;
+  final double? height;
+
+  String get _assetPath => switch (variant) {
+        SmartStitchLogoVariant.iconOnly => AppAssets.logoIconOnly,
+        SmartStitchLogoVariant.withLabel => AppAssets.logoWithLabel,
+      };
+
+  double _resolveMaxWidth(double screenWidth) {
+    if (maxWidth != null) return maxWidth!;
+
+    return switch (size) {
+      SmartStitchLogoSize.compact => screenWidth * 0.32,
+      SmartStitchLogoSize.medium => screenWidth * 0.52,
+      SmartStitchLogoSize.large => screenWidth * 0.45,
+    }.clamp(100.0, 280.0);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CustomPaint(
-          size: Size(size, size),
-          painter: _LogoPainter(),
-        ),
-        if (showText) ...[
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Smart Stitch',
-            style: textStyle ?? AppTypography.logo,
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final resolvedWidth = _resolveMaxWidth(screenWidth);
+
+    return Image.asset(
+      _assetPath,
+      width: resolvedWidth,
+      height: height,
+      fit: BoxFit.contain,
+      filterQuality: FilterQuality.high,
+      gaplessPlayback: true,
+      errorBuilder: (context, error, stackTrace) {
+        return SizedBox(
+          width: resolvedWidth,
+          height: height ?? resolvedWidth * 0.4,
+          child: Center(
+            child: Icon(
+              Icons.image_not_supported_outlined,
+              size: resolvedWidth * 0.3,
+              color: AppColors.primary,
+            ),
           ),
-        ],
-      ],
+        );
+      },
     );
   }
 }
 
-class _LogoPainter extends CustomPainter {
+class ThemedFab extends StatelessWidget {
+  const ThemedFab({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+    this.heroTag,
+  });
+
+  final IconData icon;
+  final VoidCallback onPressed;
+  final Object? heroTag;
+
   @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = AppColors.primary
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.06
-      ..strokeCap = StrokeCap.round;
-
-    final fillPaint = Paint()
-      ..color = AppColors.primary
-      ..style = PaintingStyle.fill;
-
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width * 0.35;
-
-    final path = Path();
-    path.moveTo(center.dx - radius * 0.3, center.dy - radius * 0.8);
-    path.quadraticBezierTo(
-      center.dx + radius * 0.8,
-      center.dy - radius * 0.5,
-      center.dx + radius * 0.5,
-      center.dy + radius * 0.3,
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: AppSpacing.fabSize,
+      height: AppSpacing.fabSize,
+      child: FloatingActionButton(
+        heroTag: heroTag,
+        onPressed: onPressed,
+        backgroundColor: AppColors.primary,
+        elevation: 4,
+        shape: const CircleBorder(),
+        child: Icon(
+          icon,
+          color: AppColors.textOnPrimary,
+          size: 28,
+        ),
+      ),
     );
-    path.quadraticBezierTo(
-      center.dx,
-      center.dy + radius * 0.9,
-      center.dx - radius * 0.5,
-      center.dy + radius * 0.2,
-    );
-    path.quadraticBezierTo(
-      center.dx - radius * 0.9,
-      center.dy - radius * 0.2,
-      center.dx - radius * 0.3,
-      center.dy - radius * 0.8,
-    );
-
-    canvas.drawPath(path, paint);
-
-    canvas.drawCircle(
-      Offset(center.dx + radius * 0.55, center.dy - radius * 0.45),
-      size.width * 0.04,
-      fillPaint,
-    );
-
-    final threadPath = Path();
-    threadPath.moveTo(center.dx + radius * 0.55, center.dy - radius * 0.45);
-    threadPath.lineTo(center.dx + radius * 0.7, center.dy + radius * 0.5);
-    canvas.drawPath(threadPath, paint);
   }
+}
+
+class HomeFabBar extends StatelessWidget {
+  const HomeFabBar({
+    super.key,
+    required this.onPlusPressed,
+    required this.onAiPressed,
+  });
+
+  final VoidCallback onPlusPressed;
+  final VoidCallback onAiPressed;
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width,
+      height: AppSpacing.fabSize,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: ThemedFab(
+              heroTag: 'home_plus_fab',
+              icon: Icons.add_rounded,
+              onPressed: onPlusPressed,
+            ),
+          ),
+          Positioned(
+            right: AppSpacing.md,
+            child: ThemedFab(
+              heroTag: 'home_ai_fab',
+              icon: Icons.auto_awesome_rounded,
+              onPressed: onAiPressed,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -45,8 +45,8 @@ class AuthCurvedHeader extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
+              AppColors.splashGradientTop,
               AppColors.primaryLight,
-              AppColors.primary,
             ],
           ),
         ),

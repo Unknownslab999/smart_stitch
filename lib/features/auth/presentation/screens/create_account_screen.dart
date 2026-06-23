@@ -49,8 +49,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
     final destination = switch (_selectedRole) {
       UserRole.customer => RouteNames.customerHome,
-      UserRole.tailor => RouteNames.tailorDashboard,
-      UserRole.shopkeeper => RouteNames.shopkeeperInventory,
+      UserRole.tailor => RouteNames.tailorHome,
+      UserRole.shopkeeper => RouteNames.shopkeeperHome,
     };
     context.go(destination);
   }

@@ -28,4 +28,6 @@ abstract final class AppColors {
   static const Color navInactive = Color(0xFF9E9E9E);
 
   static const Color cardShadow = Color(0x1A000000);
+
+  static const Color drawerBackground = Color(0xFFF9F7F2);
 }
